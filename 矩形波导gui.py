@@ -635,7 +635,7 @@ class MainWindow(QMainWindow):
 
 
         self.info_button = QPushButton("关于")
-        self.info_button.setFixedWidth(150)
+        # self.info_button.setFixedWidth(150)
         self.info_button.clicked.connect(self.info_button_click)
         self.button_layout.addWidget(self.info_button)
 
@@ -691,7 +691,7 @@ class MainWindow(QMainWindow):
         msg_box.setTextFormat(Qt.TextFormat.RichText)  # 启用富文本格式
         msg_box.setText("本程序由微电子本科22级吴以恒制作，使用Python语言，基于PySide6和matplotlib库，并使用umpy库进行数值计算。<br><br>"
         "本程序的源代码已上传至GitHub，欢迎查看和二次开发："
-        "<a href='https://zhuanlan.zhihu.com/p/610696872'>https://zhuanlan.zhihu.com/p/610696872</a><br><br>"
+        "<a href='https://github.com/wxhenry/Rectangular-waveguide-animation-demonstration'>https://github.com/wxhenry/Rectangular-waveguide-animation-demonstration</a><br><br>"
         "喜欢本程序的话，请给我一个star，谢谢！")
         msg_box.exec()
 
