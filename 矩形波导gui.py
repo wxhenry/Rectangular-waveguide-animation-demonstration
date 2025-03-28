@@ -681,10 +681,19 @@ class MainWindow(QMainWindow):
 
 
     def info_button_click(self):
-        QMessageBox.about(self, "关于", "本程序由微电子本科22级吴以恒制作，用于展示矩形波导中的场分布。\n"
-        "本程序使用Python语言，基于PySide6和matplotlib库，使用了numpy库进行数值计算。\n"
-        "本程序的源代码已上传至GitHub，欢迎查看。"
-        "https://zhuanlan.zhihu.com/p/610696872\n")
+        # QMessageBox.about(self, "关于", "本程序由微电子本科22级吴以恒制作，使用Python语言，基于PySide6和matplotlib库，使用了numpy库进行数值计算。\n"
+        # "本程序的源代码已上传至GitHub，欢迎查看和二次开发："
+        # "<a href='https://zhuanlan.zhihu.com/p/610696872'>https://zhuanlan.zhihu.com/p/610696872</a>\n"
+        # "喜欢本程序的话，请给我一个star，谢谢！")
+
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("关于")
+        msg_box.setTextFormat(Qt.TextFormat.RichText)  # 启用富文本格式
+        msg_box.setText("本程序由微电子本科22级吴以恒制作，使用Python语言，基于PySide6和matplotlib库，并使用umpy库进行数值计算。<br><br>"
+        "本程序的源代码已上传至GitHub，欢迎查看和二次开发："
+        "<a href='https://zhuanlan.zhihu.com/p/610696872'>https://zhuanlan.zhihu.com/p/610696872</a><br><br>"
+        "喜欢本程序的话，请给我一个star，谢谢！")
+        msg_box.exec()
 
 
 
