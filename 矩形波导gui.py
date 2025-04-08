@@ -228,12 +228,15 @@ class MplCanvas(FigureCanvasQTAgg):
         self.ax.spines["top"].set_edgecolor("none")
         self.ax.spines["right"].set_edgecolor("none")
         self.ax.tick_params(axis="x", colors="grey", labelsize=12)
-        self.ax.tick_params(axis="y", colors="grey", labelsize=12)
-        self.ax.tick_params(axis="z", colors="grey", labelsize=12)
+        self.ax.tick_params(axis="y", colors="grey", labelsize=12, pad=0)
+        self.ax.tick_params(axis="z", colors="grey", labelsize=12, pad=0)
         self.ax.yaxis.get_offset_text().set(size=12)
         self.ax.xaxis.get_offset_text().set(size=12)
         self.ax.zaxis.get_offset_text().set(size=12)
-        self.ax.tick_params(color="grey")
+        self.ax.set_xlabel("z", color="grey", fontsize=20, labelpad=10)
+        self.ax.set_ylabel("x", color="grey", fontsize=20, labelpad=0)
+        self.ax.set_zlabel("y", color="grey", fontsize=20, labelpad=0)
+        # 轴加上箭头指向正方向
         self.ax.grid(False)
         # self.ax.grid(color='grey', alpha=0.4)
         # gird中间是镂空的
@@ -500,9 +503,9 @@ class MainWindow(QMainWindow):
         group3 = QGroupBox("切片方向")
         hbox3 = QHBoxLayout()
         
-        self.option3_1 = QRadioButton("x")
-        self.option3_2 = QRadioButton("y")
-        self.option3_3 = QRadioButton("z")
+        self.option3_1 = QRadioButton("xoy")
+        self.option3_2 = QRadioButton("yoz")
+        self.option3_3 = QRadioButton("xoz")
 
         self.button_group3 = QButtonGroup(self)
         self.button_group3.addButton(self.option3_1, 1)
