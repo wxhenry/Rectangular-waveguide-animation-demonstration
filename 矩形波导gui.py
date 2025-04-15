@@ -34,9 +34,9 @@ def length_of(vector):
     # 用np矢量化
     return np.sqrt(np.sum(vector**2, axis=-1))
 
-
-
-
+z_color="#dd5555"
+x_color="#55bb55"
+y_color="#5555dd"
 
 class ArrowArray(QLabel):
     def __init__(
@@ -233,14 +233,16 @@ class MplCanvas(FigureCanvasQTAgg):
         self.ax.yaxis.get_offset_text().set(size=12)
         self.ax.xaxis.get_offset_text().set(size=12)
         self.ax.zaxis.get_offset_text().set(size=12)
-        self.ax.set_xlabel("z", color="grey", fontsize=20, labelpad=10)
-        self.ax.set_ylabel("x", color="grey", fontsize=20, labelpad=0)
-        self.ax.set_zlabel("y", color="grey", fontsize=20, labelpad=0)
-        # 轴加上箭头指向正方向
+        # self.ax.set_xlabel("z", color="grey", fontsize=20, labelpad=10)
+        # self.ax.set_ylabel("x", color="grey", fontsize=20, labelpad=0)
+        # self.ax.set_zlabel("y", color="grey", fontsize=20, labelpad=0)
         self.ax.grid(False)
         # self.ax.grid(color='grey', alpha=0.4)
         # gird中间是镂空的
         self.ax.set_facecolor("none")
+
+        # 视角
+        self.ax.view_init(elev=20, azim=40)
 
         # tansparent background
         self.ax.patch.set_alpha(0)
@@ -670,7 +672,15 @@ class MainWindow(QMainWindow):
         self.arrow_start_points = []
         self.arrow_array = ArrowArray(m=1, n=0, e_field=True, TM=False, omega=5e8)
 
-        
+        # 添加xyz轴
+        self.axis_x = self.sc1.ax.quiver(0, 0, 0, self.arrow_array.c, 0, 0, color=z_color, arrow_length_ratio=1/self.arrow_array.c/2)
+        self.axis_y = self.sc1.ax.quiver(0, 0, 0, 0, self.arrow_array.a, 0, color=x_color, arrow_length_ratio=1/self.arrow_array.a/2)
+        self.axis_z = self.sc1.ax.quiver(0, 0, 0, 0, 0, self.arrow_array.b, color=y_color, arrow_length_ratio=1/self.arrow_array.b/2)
+        # 在终端添加文字
+        self.axis_tex_x = self.sc1.ax.text(self.arrow_array.c+0.5, 0, 0, "z", color=z_color, fontsize=20)
+        self.axis_tex_y = self.sc1.ax.text(0, self.arrow_array.a+0.3, 0, "x", color=x_color, fontsize=20)
+        self.axis_tex_z = self.sc1.ax.text(0, 0, self.arrow_array.b+0.3, "y", color=y_color, fontsize=20)
+
         self.set_range()
 
         self.t = 0
@@ -709,6 +719,20 @@ class MainWindow(QMainWindow):
         self.sc1.ax.set_xticks(np.arange(0, self.arrow_array.c + 1, 1))
         self.sc1.ax.set_yticks(np.arange(0, self.arrow_array.a + 1, 1))
         self.sc1.ax.set_zticks(np.arange(0, self.arrow_array.b + 1, 1))
+
+        # 更改xyz轴的终点
+        self.axis_x.remove()
+        self.axis_y.remove()
+        self.axis_z.remove()
+        self.axis_tex_x.remove()
+        self.axis_tex_y.remove()
+        self.axis_tex_z.remove()
+        self.axis_x = self.sc1.ax.quiver(0, 0, 0, self.arrow_array.c, 0, 0, color=z_color, arrow_length_ratio=1/self.arrow_array.c/2)
+        self.axis_y = self.sc1.ax.quiver(0, 0, 0, 0, self.arrow_array.a, 0, color=x_color, arrow_length_ratio=1/self.arrow_array.a/2)
+        self.axis_z = self.sc1.ax.quiver(0, 0, 0, 0, 0, self.arrow_array.b, color=y_color, arrow_length_ratio=1/self.arrow_array.b/2)
+        self.axis_tex_x = self.sc1.ax.text(self.arrow_array.c+0.5, 0, 0, "z", color=z_color, fontsize=20)
+        self.axis_tex_y = self.sc1.ax.text(0, self.arrow_array.a+0.3, 0, "x", color=x_color, fontsize=20)
+        self.axis_tex_z = self.sc1.ax.text(0, 0, self.arrow_array.b+0.3, "y", color=y_color, fontsize=20)
 
         self.sc1.ax.set_box_aspect([self.arrow_array.c, self.arrow_array.a, self.arrow_array.b])
 

@@ -1,0 +1,1 @@
+ pyinstaller -F -w 矩形波导gui.py --icon=waveguide.ico
